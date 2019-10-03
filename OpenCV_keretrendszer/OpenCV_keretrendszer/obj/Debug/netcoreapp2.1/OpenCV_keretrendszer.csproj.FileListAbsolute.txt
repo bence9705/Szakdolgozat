@@ -1,0 +1,15 @@
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\OpenCV_keretrendszer.deps.json
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\OpenCV_keretrendszer.runtimeconfig.json
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\OpenCV_keretrendszer.runtimeconfig.dev.json
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\OpenCV_keretrendszer.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.csprojAssemblyReference.cache
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.csproj.CoreCompileInputs.cache
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.AssemblyInfoInputs.cache
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.AssemblyInfo.cs
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\dll\x86\OpenCvSharpExtern.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\dll\x86\opencv_ffmpeg400.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\dll\x64\OpenCvSharpExtern.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\dll\x64\opencv_ffmpeg400_64.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\bin\Debug\netcoreapp2.1\OpenCV_keretrendszer.pdb
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.dll
+C:\Users\cseuz\source\repos\OpenCV_keretrendszer\OpenCV_keretrendszer\obj\Debug\netcoreapp2.1\OpenCV_keretrendszer.pdb
