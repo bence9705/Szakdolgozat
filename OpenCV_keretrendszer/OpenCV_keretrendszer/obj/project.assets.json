@@ -875,23 +875,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\cseuz\\.nuget\\packages\\": {},
+    "C:\\Users\\Bence\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cseuz\\source\\repos\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\OpenCV_keretrendszer.csproj",
+      "projectUniqueName": "E:\\Szakdolgozat\\Szakdolgozat\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\OpenCV_keretrendszer.csproj",
       "projectName": "OpenCV_keretrendszer",
-      "projectPath": "C:\\Users\\cseuz\\source\\repos\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\OpenCV_keretrendszer.csproj",
-      "packagesPath": "C:\\Users\\cseuz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cseuz\\source\\repos\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\obj\\",
+      "projectPath": "E:\\Szakdolgozat\\Szakdolgozat\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\OpenCV_keretrendszer.csproj",
+      "packagesPath": "C:\\Users\\Bence\\.nuget\\packages\\",
+      "outputPath": "E:\\Szakdolgozat\\Szakdolgozat\\OpenCV_keretrendszer\\OpenCV_keretrendszer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\cseuz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Bence\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

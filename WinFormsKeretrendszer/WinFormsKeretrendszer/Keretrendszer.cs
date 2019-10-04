@@ -12,8 +12,7 @@ namespace WinFormsKeretrendszer
         {
             InitializeComponent();
         }
-
-
+        
         enum ClickedButton
         {
             normal = 1,
@@ -25,7 +24,7 @@ namespace WinFormsKeretrendszer
         ClickedButton buttonToSave = ClickedButton.normal;
 
         public Mat input = new Mat();
-        
+
         public static int highTreshold = 255;
         public static int lowThreshold = highTreshold / 3;
         public Mat canny = new Mat();
@@ -34,8 +33,9 @@ namespace WinFormsKeretrendszer
         public static int maxBinaryValue = 255;
         public Mat threshold = new Mat();
 
-
-
+        //VIDEOHOZ
+        private VideoCapture videoCapture;
+        string loadedVideo;
         public Bitmap ConvertMatToBitmap(Mat matToConvert)
         {
             return OpenCvSharp.Extensions.BitmapConverter.ToBitmap(matToConvert);
@@ -43,7 +43,7 @@ namespace WinFormsKeretrendszer
 
         private void saveDisplayedImage(string filePath)
         {
-            switch(buttonToSave)
+            switch (buttonToSave)
             {
                 case ClickedButton.normal:
                     Cv2.ImWrite(filePath, input);
@@ -54,11 +54,12 @@ namespace WinFormsKeretrendszer
                 case ClickedButton.threshold:
                     Cv2.ImWrite(filePath, threshold);
                     break;
-                //case ClickedButton.watershed:
-                //    Cv2.ImWrite(filePath, watershed);
-                //    break;
+                    //case ClickedButton.watershed:
+                    //    Cv2.ImWrite(filePath, watershed);
+                    //    break;
             }
         }
+
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -71,11 +72,33 @@ namespace WinFormsKeretrendszer
             {
                 OpenFileDialog open = new OpenFileDialog();
 
-                if(open.ShowDialog() == DialogResult.OK)
+                if (open.ShowDialog() == DialogResult.OK)
                 {
-                    input = new Mat(open.FileName);
-                    Bitmap inputMap = new Bitmap(ConvertMatToBitmap(input));
-                    pictureBox1.Image = inputMap;
+                    //input = new Mat(open.FileName);
+                    //Bitmap inputMap = new Bitmap(ConvertMatToBitmap(input));
+                    //pictureBox1.Image = inputMap;
+
+                    loadedVideo = open.FileName;
+
+                    videoCapture = new VideoCapture(loadedVideo);
+                    Mat image = new Mat();
+                    //FourCC fcc = new FourCC();
+                    //fcc = FourCC.MJPG;
+
+                    //VideoWriter writer = new VideoWriter(@"E:\openCV\videos\tesztEllipseYomarad.avi", fcc, 25, new OpenCvSharp.Size(videoCapture.FrameWidth, videoCapture.FrameHeight), true);
+                    int sleepTime = (int)Math.Round(1000 / videoCapture.Fps);
+
+                    while (true)
+                    {
+                        videoCapture.Read(image); // same as cvQueryFrame
+                        if (image.Empty())
+                            break;
+                        //    writer.Write(image);
+                        Bitmap inputMap = new Bitmap(ConvertMatToBitmap(image));
+                        pictureBox1.Image = inputMap;
+                        Cv2.WaitKey(sleepTime);
+                    }
+
                 }
             }
             catch (Exception exception)
@@ -89,17 +112,57 @@ namespace WinFormsKeretrendszer
             try
             {
                 SaveFileDialog save = new SaveFileDialog();
-
-                if(save.ShowDialog() == DialogResult.OK)
+                if (save.ShowDialog() == DialogResult.OK)
                 {
-                    //Cv2.ImWrite(save.FileName, input);
-                    saveDisplayedImage(save.FileName);
+                    videoCapture = new VideoCapture(loadedVideo);
+                    Mat image = new Mat();
+                    FourCC fcc = new FourCC();
+                    fcc = FourCC.MJPG;
+
+                    int sleepTime = (int)Math.Round(1000 / videoCapture.Fps);
+                    switch (buttonToSave)
+                    {
+                        case ClickedButton.normal:
+                            //Cv2.ImWrite(save.FileName, input);
+                            //   saveDisplayedImage(save.FileName);
+
+                            VideoWriter writer = new VideoWriter(save.FileName, fcc, 25, new OpenCvSharp.Size(videoCapture.FrameWidth, videoCapture.FrameHeight), true);
+
+                            while (true)
+                            {
+                                videoCapture.Read(image); // same as cvQueryFrame
+                                if (image.Empty())
+                                    break;
+                                writer.Write(image);
+                                Bitmap inputMap = new Bitmap(ConvertMatToBitmap(image));
+                                pictureBox1.Image = inputMap;
+                                Cv2.WaitKey(sleepTime);
+                            }
+
+                            break;
+                        case ClickedButton.canny:
+                            VideoWriter writer2 = new VideoWriter(save.FileName, fcc, 25, new OpenCvSharp.Size(videoCapture.FrameWidth, videoCapture.FrameHeight), false);
+
+                            while (true)
+                            {
+                                videoCapture.Read(image); // same as cvQueryFrame
+                                if (image.Empty())
+                                    break;
+                                Cv2.Canny(image, canny, highTreshold, lowThreshold);
+                                writer2.Write(canny);
+                                Bitmap inputMap = new Bitmap(ConvertMatToBitmap(canny));
+                                pictureBox1.Image = inputMap;
+                                Cv2.WaitKey(sleepTime);
+                            }
+                            break;
+                    }
                 }
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
+
         }
 
 
@@ -108,21 +171,30 @@ namespace WinFormsKeretrendszer
             if (!input.Empty())
             {
                 buttonToSave = ClickedButton.normal;
-                Bitmap inputMap = new Bitmap(ConvertMatToBitmap(input));
-                pictureBox1.Image = inputMap;
+                // Bitmap inputMap = new Bitmap(ConvertMatToBitmap(input));
+                // pictureBox1.Image = inputMap;
             }
         }
 
         private void Canny_Click(object sender, EventArgs e)
         {
-            if(!input.Empty())
-            {
-                buttonToSave = ClickedButton.canny;
-                Cv2.Canny(input, canny, highTreshold, lowThreshold);
-                Bitmap cannyMap = new Bitmap(ConvertMatToBitmap(canny));
-                pictureBox1.Image = cannyMap;
-            }
 
+            buttonToSave = ClickedButton.canny;
+            videoCapture = new VideoCapture(loadedVideo);
+            Mat image = new Mat();
+
+            int sleepTime = (int)Math.Round(1000 / videoCapture.Fps);
+
+            while (true)
+            {
+                videoCapture.Read(image); // same as cvQueryFrame
+                if (image.Empty())
+                    break;
+                Cv2.Canny(image, canny, highTreshold, lowThreshold);//    writer.Write(image);
+                Bitmap inputMap = new Bitmap(ConvertMatToBitmap(canny));
+                pictureBox1.Image = inputMap;
+                Cv2.WaitKey(sleepTime);
+            }
         }
 
 
@@ -131,11 +203,11 @@ namespace WinFormsKeretrendszer
             if (!input.Empty())
             {
                 buttonToSave = ClickedButton.threshold;
-                Mat greyscaled = new Mat();
-                Cv2.CvtColor(input, greyscaled, ColorConversionCodes.BGR2GRAY);
-                Cv2.Threshold(greyscaled, threshold, thresholdValue, maxBinaryValue, ThresholdTypes.Binary);
-                Bitmap thresholdMap = new Bitmap(ConvertMatToBitmap(threshold));
-                pictureBox1.Image = thresholdMap;
+                //   Mat greyscaled = new Mat();
+                //   Cv2.CvtColor(input, greyscaled, ColorConversionCodes.BGR2GRAY);
+                //   Cv2.Threshold(greyscaled, threshold, thresholdValue, maxBinaryValue, ThresholdTypes.Binary);
+                //   Bitmap thresholdMap = new Bitmap(ConvertMatToBitmap(threshold));
+                //   pictureBox1.Image = thresholdMap;
             }
         }
 
