@@ -30,8 +30,8 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseSavePathAndNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -51,38 +51,38 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1123, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(881, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.chooseSavePathAndNameToolStripMenuItem,
             this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // chooseSavePathAndNameToolStripMenuItem
+            // 
+            this.chooseSavePathAndNameToolStripMenuItem.Name = "chooseSavePathAndNameToolStripMenuItem";
+            this.chooseSavePathAndNameToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.chooseSavePathAndNameToolStripMenuItem.Text = "Choose save path and name";
+            this.chooseSavePathAndNameToolStripMenuItem.Click += new System.EventHandler(this.chooseSavePathAndNameToolStripMenuItem_Click);
+            // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -95,22 +95,23 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(12, 70);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1099, 588);
+            this.panel1.Size = new System.Drawing.Size(857, 376);
             this.panel1.TabIndex = 1;
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(960, 540);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.Size = new System.Drawing.Size(857, 376);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // Canny
             // 
             this.Canny.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Canny.Location = new System.Drawing.Point(344, 151);
+            this.Canny.Location = new System.Drawing.Point(102, 45);
             this.Canny.Name = "Canny";
             this.Canny.Size = new System.Drawing.Size(75, 23);
             this.Canny.TabIndex = 2;
@@ -121,7 +122,7 @@
             // Thresholding
             // 
             this.Thresholding.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Thresholding.Location = new System.Drawing.Point(425, 151);
+            this.Thresholding.Location = new System.Drawing.Point(183, 45);
             this.Thresholding.Name = "Thresholding";
             this.Thresholding.Size = new System.Drawing.Size(108, 23);
             this.Thresholding.TabIndex = 3;
@@ -132,7 +133,7 @@
             // Watershed
             // 
             this.Watershed.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Watershed.Location = new System.Drawing.Point(539, 151);
+            this.Watershed.Location = new System.Drawing.Point(297, 45);
             this.Watershed.Name = "Watershed";
             this.Watershed.Size = new System.Drawing.Size(75, 23);
             this.Watershed.TabIndex = 4;
@@ -164,7 +165,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1123, 670);
+            this.ClientSize = new System.Drawing.Size(881, 458);
             this.Controls.Add(this.BackToNormal);
             this.Controls.Add(this.Algoritmusok);
             this.Controls.Add(this.Watershed);
@@ -178,6 +179,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -189,7 +191,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -198,6 +199,7 @@
         private System.Windows.Forms.Button Watershed;
         private System.Windows.Forms.Label Algoritmusok;
         private System.Windows.Forms.Button BackToNormal;
+        private System.Windows.Forms.ToolStripMenuItem chooseSavePathAndNameToolStripMenuItem;
     }
 }
 
