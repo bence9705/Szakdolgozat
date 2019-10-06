@@ -19,7 +19,7 @@ namespace WinFormsKeretrendszer
             normal = 1,
             canny = 2,
             threshold = 3,
-            //watershed = 4
+            watershed = 4
         }
 
         public Mat input = new Mat();
@@ -53,6 +53,8 @@ namespace WinFormsKeretrendszer
                     return false;
                 case ClickedButton.threshold:
                     return false;
+                case ClickedButton.watershed:
+                    return true;
                 default:
                     return false;
             }
@@ -122,19 +124,8 @@ namespace WinFormsKeretrendszer
 
         private void Watershed_Click(object sender, EventArgs e)
         {
-            if (!input.Empty())
-            {
-                //buttonToSave = ClickedButton.watershed;
-                Mat binary = new Mat();
-                Mat markers = new Mat();
-                int[,] labels;
-                Cv2.CvtColor(input, binary, ColorConversionCodes.BGR2GRAY);
-                Cv2.Threshold(binary, binary, thresholdValue, maxBinaryValue, ThresholdTypes.Binary);
-                Cv2.ConnectedComponents(markers, out labels, PixelConnectivity.Connectivity8);
-                //Cv2.Watershed()
-                //Bitmap binaryMap = new Bitmap(ConvertMatToBitmap(binary));
-                //pictureBox1.Image = binaryMap;
-            }
+            videoCapture = new VideoCapture(loadedVideo);
+            videoPlayAndSave(ClickedButton.watershed);
         }
 
         private void BackToNormal_Click(object sender, EventArgs e)
@@ -220,6 +211,71 @@ namespace WinFormsKeretrendszer
 
                         Bitmap thresholdMap = new Bitmap(ConvertMatToBitmap(threshold));
                         pictureBox1.Image = thresholdMap;
+                        Cv2.WaitKey(sleepTime);
+                    }
+                    break;
+
+                case ClickedButton.watershed:
+                    while(true)
+                    {
+                        videoCapture.Read(buffer);
+                        if (buffer.Empty())
+                            break;
+
+                        //GREYSCALED IMAGE
+                        Mat greyscale = new Mat();
+                        Cv2.CvtColor(buffer, greyscale, ColorConversionCodes.BGR2GRAY);
+
+                        //BINARY AND INVERTED IMAGE
+                        Mat threshold = new Mat();
+                        double thresholdValue = 140;
+                        double thresholdMaxValue = 255;
+                        Cv2.Threshold(greyscale, threshold, thresholdValue, thresholdMaxValue, ThresholdTypes.BinaryInv);
+
+                        //MORPHOLOGY IMAGE (REMOVE WHITE NOISE)
+                        Mat morphology = new Mat();
+                        Mat element = new Mat(new OpenCvSharp.Size(3, 3), MatType.CV_8UC1);
+                        int iterations = 2;
+                        Cv2.MorphologyEx(threshold, morphology, MorphTypes.Open, element, iterations: iterations);
+
+                        //SURE BACKGROUND
+                        Mat sureBackground = new Mat();
+                        Mat ellipseElement = Cv2.GetStructuringElement(MorphShapes.Rect, new OpenCvSharp.Size(3, 3));
+                        iterations = 3;
+                        Cv2.Dilate(morphology, sureBackground, ellipseElement, iterations: iterations);
+
+                        //SURE FOREGROUND DISTANCE TRANSFORM AND NORMALIZE 
+                        Mat distanceTransform = new Mat();
+                        Cv2.DistanceTransform(morphology, distanceTransform, DistanceTypes.L1, DistanceMaskSize.Mask3);
+                        distanceTransform.ConvertTo(distanceTransform, MatType.CV_8U);
+
+                        //SURE FOREGROUND THRESHOLD
+                        Mat sureForeground = new Mat();
+                        thresholdValue = 19;
+                        Cv2.Threshold(distanceTransform, sureForeground, thresholdValue, thresholdMaxValue, ThresholdTypes.Binary);
+
+                        //FIND UNKNOWN AREA
+                        Mat unknownArea = new Mat();
+                        Cv2.Subtract(sureBackground, sureForeground, unknownArea);
+
+                        //CREATE MARKERS FOR WATERSHED
+                        Mat markers = new Mat();
+                        Mat result = new Mat();
+                        Cv2.ConnectedComponents(sureForeground, markers);
+                        markers = markers + 30;
+                        markers = watershedHelper.UnknownPixelSetToZero(unknownArea, markers);
+                        Cv2.Watershed(buffer, markers);
+
+
+                        //MAKE BORDERS IN IMAGE
+                        result = watershedHelper.MarkBorders(markers, buffer);
+                        markers.ConvertTo(markers, MatType.CV_8UC1);
+                        if (allowToWriteVideo == true)
+                        {
+                            writer.Write(result);
+                        }
+                        Bitmap watershedMap = new Bitmap(ConvertMatToBitmap(result));
+                        pictureBox1.Image = watershedMap;
                         Cv2.WaitKey(sleepTime);
                     }
                     break;

@@ -51,7 +51,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(881, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1007, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -95,22 +95,20 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Location = new System.Drawing.Point(12, 70);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(857, 376);
+            this.panel1.Size = new System.Drawing.Size(983, 579);
             this.panel1.TabIndex = 1;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(857, 376);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(960, 540);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // Canny
             // 
-            this.Canny.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.Canny.Location = new System.Drawing.Point(102, 45);
             this.Canny.Name = "Canny";
             this.Canny.Size = new System.Drawing.Size(75, 23);
@@ -121,7 +119,6 @@
             // 
             // Thresholding
             // 
-            this.Thresholding.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.Thresholding.Location = new System.Drawing.Point(183, 45);
             this.Thresholding.Name = "Thresholding";
             this.Thresholding.Size = new System.Drawing.Size(108, 23);
@@ -132,7 +129,6 @@
             // 
             // Watershed
             // 
-            this.Watershed.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.Watershed.Location = new System.Drawing.Point(297, 45);
             this.Watershed.Name = "Watershed";
             this.Watershed.Size = new System.Drawing.Size(75, 23);
@@ -165,7 +161,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(881, 458);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1007, 661);
             this.Controls.Add(this.BackToNormal);
             this.Controls.Add(this.Algoritmusok);
             this.Controls.Add(this.Watershed);
@@ -179,7 +177,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
