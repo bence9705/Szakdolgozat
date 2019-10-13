@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Kepfeldolgozas\CrystalEvaluatorCanny.cs" />
+    <Compile Include="Kepfeldolgozas\CrystalEvaluatorBase.cs" />
+    <Compile Include="Kepfeldolgozas\CrystalEvaluatorThreshold.cs" />
+    <Compile Include="Kepfeldolgozas\CrystalEvaluatorWatershed.cs" />
     <Compile Include="WatershedHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

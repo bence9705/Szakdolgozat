@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfKeretrendszer
 {
-    class WatershedHelper
+    static class WatershedHelper
     {
         static public Mat UnknownPixelSetToZero(Mat unknownImage, Mat markers)
         {

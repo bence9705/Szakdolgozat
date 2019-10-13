@@ -4,6 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.IO;
+using WpfKeretrendszer.Kepfeldolgozas;
 
 namespace WpfKeretrendszer
 {
@@ -17,6 +18,7 @@ namespace WpfKeretrendszer
             InitializeComponent();
         }
 
+        //ADATOK
         enum ClickedButton
         {
             normal = 1,
@@ -25,49 +27,25 @@ namespace WpfKeretrendszer
             watershed = 4
         }
 
-        private static Mat input = new Mat();
-
-        private static int highTreshold = 255;
-        private static int lowThreshold = highTreshold / 3;
-        private Mat canny = new Mat();
-
-        private static int thresholdValue = 127;
-        private static int maxBinaryValue = 255;
-        private Mat threshold = new Mat();
-
         //Videohoz
         private VideoCapture videoCapture;
         private string loadedVideo;
-        private string savePath;
 
+        VideoWriter writer;
+        private string savePath;
         private FourCC fcc = FourCC.MJPG;
         private int fps = 25;
-        VideoWriter writer;
+
+        private bool isWriterCreated = false;
         private bool allowToWriteVideo = false;
         string videoAlreadyExists = "Video already exists, for save please choose a different file name!";
 
-        private bool isColouredVideo(ClickedButton button)
-        {
-            switch (button)
-            {
-                case ClickedButton.normal:
-                    return true;
-                case ClickedButton.canny:
-                    return false;
-                case ClickedButton.threshold:
-                    return false;
-                case ClickedButton.watershed:
-                    return true;
-                default:
-                    return false;
-            }
-        }
+        //proba
+        CrystalEvaluatorCanny testCannyClass = new CrystalEvaluatorCanny(255, 127);
+        CrystalEvaluatorThreshold testThresholdClass = new CrystalEvaluatorThreshold(127, 255);
+        CrystalEvaluatorWatershed testWatershedClass = new CrystalEvaluatorWatershed(127, 255, new OpenCvSharp.Size(3, 3), MatType.CV_8UC1, 2);
 
-        public BitmapSource ConvertMatToBitmapSource(Mat matToConvert)
-        {
-            return OpenCvSharp.Extensions.BitmapSourceConverter.ToBitmapSource(matToConvert);
-        }
-
+        //ESEMENYKEZELOK
         private void ChooseSavePathClick(object sender, RoutedEventArgs e)
         {
             try
@@ -95,7 +73,7 @@ namespace WpfKeretrendszer
                 {
                     loadedVideo = open.FileName;
                     videoCapture = new VideoCapture(loadedVideo);
-                    videoPlayAndSave(ClickedButton.normal);
+                    VideoPlayAndSave(ClickedButton.normal);
                 }
             }
             catch (Exception exception)
@@ -112,32 +90,36 @@ namespace WpfKeretrendszer
         private void CannyClick(object sender, RoutedEventArgs e)
         {
             videoCapture = new VideoCapture(loadedVideo);
-            videoPlayAndSave(ClickedButton.canny);
+            VideoPlayAndSave(ClickedButton.canny);
         }
 
         private void ThresholdClick(object sender, RoutedEventArgs e)
         {
             videoCapture = new VideoCapture(loadedVideo);
-            videoPlayAndSave(ClickedButton.threshold);
+            VideoPlayAndSave(ClickedButton.threshold);
         }
 
         private void WatershedClick(object sender, RoutedEventArgs e)
         {
             videoCapture = new VideoCapture(loadedVideo);
-            videoPlayAndSave(ClickedButton.watershed);
+            VideoPlayAndSave(ClickedButton.watershed);
         }
 
         private void BackToNormalClick(object sender, RoutedEventArgs e)
         {
             videoCapture = new VideoCapture(loadedVideo);
-            videoPlayAndSave(ClickedButton.normal);
+            VideoPlayAndSave(ClickedButton.normal);
 
         }
 
-        private void videoPlayAndSave(ClickedButton button)
+        //FUGGVENYEK
+        private void VideoPlayAndSave(ClickedButton button)
         {
+            isWriterCreated = false;
             Mat buffer = new Mat();
+            Mat result = new Mat();
             int sleepTime = (int)Math.Round(1000 / videoCapture.Fps);
+
             if (savePath == null)
             {
                 allowToWriteVideo = false;
@@ -145,7 +127,6 @@ namespace WpfKeretrendszer
             else if (!File.Exists(savePath))
             {
                 allowToWriteVideo = true;
-                writer = new VideoWriter(savePath, fcc, fps, new OpenCvSharp.Size(videoCapture.FrameWidth, videoCapture.FrameHeight), isColouredVideo(button));
             }
             else
             {
@@ -153,129 +134,58 @@ namespace WpfKeretrendszer
                 allowToWriteVideo = false;
             }
 
-            switch (button)
+            while (true)
             {
-                case ClickedButton.normal:
-                    while (true)
-                    {
-                        videoCapture.Read(input);
-                        if (input.Empty())
-                        {
-                            break;
-
-                        }
-                        if (allowToWriteVideo == true)
-                        {
-                            writer.Write(input);
-                        }
-
-                        ImageDisplay.Source = ConvertMatToBitmapSource(input);
-                        Cv2.WaitKey(sleepTime);
-                    }
+                videoCapture.Read(buffer);
+                if (buffer.Empty())
+                {
                     break;
 
-                case ClickedButton.canny:
-                    while (true)
+                }
+                switch (button)
+                {
+                    case ClickedButton.normal:
+                        result = buffer;
+                        break;
+                    case ClickedButton.canny:
+                        result = testCannyClass.ProcessNextFrame(buffer);
+                        break;
+                    case ClickedButton.threshold:
+                        result = testThresholdClass.ProcessNextFrame(buffer);
+                        break;
+                    case ClickedButton.watershed:
+                        result = testWatershedClass.ProcessNextFrame(buffer);
+                        break;
+                }
+                if (allowToWriteVideo == true)
+                {
+                    if(!isWriterCreated)
                     {
-                        videoCapture.Read(buffer);
-                        if (buffer.Empty())
-                            break;
-
-                        Cv2.Canny(buffer, canny, highTreshold, lowThreshold);
-                        if (allowToWriteVideo == true)
-                        {
-                            writer.Write(canny);
-                        }
-
-                        ImageDisplay.Source = ConvertMatToBitmapSource(canny);
-                        Cv2.WaitKey(sleepTime);
+                        writer = new VideoWriter(savePath, fcc, fps, new OpenCvSharp.Size(videoCapture.FrameWidth, videoCapture.FrameHeight), isColouredVideo(result));
+                        isWriterCreated = true;
                     }
-                    break;
+                    writer.Write(result);
+                }
 
-                case ClickedButton.threshold:
-                    Mat greyscaled = new Mat();
-                    while (true)
-                    {
-                        videoCapture.Read(buffer);
-                        if (buffer.Empty())
-                            break;
-                        Cv2.CvtColor(buffer, greyscaled, ColorConversionCodes.BGR2GRAY);
-                        Cv2.Threshold(greyscaled, threshold, thresholdValue, maxBinaryValue, ThresholdTypes.Binary);
-                        if (allowToWriteVideo == true)
-                        {
-                            writer.Write(threshold);
-
-                        }
-
-                        ImageDisplay.Source = ConvertMatToBitmapSource(threshold);
-                        Cv2.WaitKey(sleepTime);
-                    }
-                    break;
-
-                case ClickedButton.watershed:
-                    while (true)
-                    {
-                        videoCapture.Read(buffer);
-                        if (buffer.Empty())
-                            break;
-
-                        //GREYSCALED IMAGE
-                        Mat greyscale = new Mat();
-                        Cv2.CvtColor(buffer, greyscale, ColorConversionCodes.BGR2GRAY);
-
-                        //BINARY AND INVERTED IMAGE
-                        Mat threshold = new Mat();
-                        double thresholdValue = 140;
-                        double thresholdMaxValue = 255;
-                        Cv2.Threshold(greyscale, threshold, thresholdValue, thresholdMaxValue, ThresholdTypes.BinaryInv);
-
-                        //MORPHOLOGY IMAGE (REMOVE WHITE NOISE)
-                        Mat morphology = new Mat();
-                        Mat element = new Mat(new OpenCvSharp.Size(3, 3), MatType.CV_8UC1);
-                        int iterations = 2;
-                        Cv2.MorphologyEx(threshold, morphology, MorphTypes.Open, element, iterations: iterations);
-
-                        //SURE BACKGROUND
-                        Mat sureBackground = new Mat();
-                        Mat ellipseElement = Cv2.GetStructuringElement(MorphShapes.Rect, new OpenCvSharp.Size(3, 3));
-                        iterations = 3;
-                        Cv2.Dilate(morphology, sureBackground, ellipseElement, iterations: iterations);
-
-                        //SURE FOREGROUND DISTANCE TRANSFORM AND NORMALIZE 
-                        Mat distanceTransform = new Mat();
-                        Cv2.DistanceTransform(morphology, distanceTransform, DistanceTypes.L1, DistanceMaskSize.Mask3);
-                        distanceTransform.ConvertTo(distanceTransform, MatType.CV_8U);
-
-                        //SURE FOREGROUND THRESHOLD
-                        Mat sureForeground = new Mat();
-                        thresholdValue = 19;
-                        Cv2.Threshold(distanceTransform, sureForeground, thresholdValue, thresholdMaxValue, ThresholdTypes.Binary);
-
-                        //FIND UNKNOWN AREA
-                        Mat unknownArea = new Mat();
-                        Cv2.Subtract(sureBackground, sureForeground, unknownArea);
-
-                        //CREATE MARKERS FOR WATERSHED
-                        Mat markers = new Mat();
-                        Mat result = new Mat();
-                        Cv2.ConnectedComponents(sureForeground, markers);
-                        markers = markers + 30;
-                        markers = WatershedHelper.UnknownPixelSetToZero(unknownArea, markers);
-                        Cv2.Watershed(buffer, markers);
-
-
-                        //MAKE BORDERS IN IMAGE
-                        result = WatershedHelper.MarkBorders(markers, buffer);
-                        markers.ConvertTo(markers, MatType.CV_8UC1);
-                        if (allowToWriteVideo == true)
-                        {
-                            writer.Write(result);
-                        }
-                        ImageDisplay.Source = ConvertMatToBitmapSource(result);
-                        Cv2.WaitKey(sleepTime);
-                    }
-                    break;
+                ImageDisplay.Source = ConvertMatToBitmapSource(result);
+                Cv2.WaitKey(sleepTime);
             }
         }
+
+        private bool isColouredVideo(Mat result)
+        {
+            if (result.Channels() == 3 || result.Channels() == 2)
+            {
+                return true;
+
+            }
+            else return false;
+        }
+
+        public BitmapSource ConvertMatToBitmapSource(Mat matToConvert)
+        {
+            return OpenCvSharp.Extensions.BitmapSourceConverter.ToBitmapSource(matToConvert);
+        }
+
     }
 }

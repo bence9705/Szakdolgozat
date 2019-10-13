@@ -27,7 +27,7 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <Image Name="ImageDisplay" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image Name="ImageDisplay">
         </Image>
     </StackPanel>
     
