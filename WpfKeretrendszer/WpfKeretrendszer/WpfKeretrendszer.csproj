@@ -71,11 +71,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Kepfeldolgozas\CrystalEvaluatorCanny.cs" />
-    <Compile Include="Kepfeldolgozas\CrystalEvaluatorBase.cs" />
-    <Compile Include="Kepfeldolgozas\CrystalEvaluatorThreshold.cs" />
-    <Compile Include="Kepfeldolgozas\CrystalEvaluatorWatershed.cs" />
-    <Compile Include="WatershedHelper.cs" />
+    <Compile Include="ImageFilters\DefaultFilter.cs" />
+    <Compile Include="ImageFilters\IImageFilter.cs" />
+    <Compile Include="ImageFilters\ImageFilterBase.cs" />
+    <Compile Include="MassFlowCalculator\IMassFlowCalculator.cs" />
+    <Compile Include="MassFlowCalculator\MassFlowCalculatorBase.cs" />
+    <Compile Include="ParticleCalculator\IParticleCalculator.cs" />
+    <Compile Include="PipeLine\BasicPipeLine.cs" />
+    <Compile Include="PipeLine\IPipeLine.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -116,6 +119,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

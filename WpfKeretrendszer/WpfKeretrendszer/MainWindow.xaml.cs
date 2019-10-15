@@ -4,7 +4,10 @@ using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.IO;
-using WpfKeretrendszer.Kepfeldolgozas;
+//using WpfKeretrendszer.Kepfeldolgozas;
+using System.Threading;
+using WpfKeretrendszer.PipeLine;
+using WpfKeretrendszer.ImageFilters;
 
 namespace WpfKeretrendszer
 {
@@ -27,6 +30,7 @@ namespace WpfKeretrendszer
             watershed = 4
         }
 
+               
         //Videohoz
         private VideoCapture videoCapture;
         private string loadedVideo;
@@ -40,14 +44,16 @@ namespace WpfKeretrendszer
         private bool allowToWriteVideo = false;
         string videoAlreadyExists = "Video already exists, for save please choose a different file name!";
 
+
         //proba
-        CrystalEvaluatorCanny testCannyClass = new CrystalEvaluatorCanny(255, 127);
-        CrystalEvaluatorThreshold testThresholdClass = new CrystalEvaluatorThreshold(127, 255);
-        CrystalEvaluatorWatershed testWatershedClass = new CrystalEvaluatorWatershed(127, 255, new OpenCvSharp.Size(3, 3), MatType.CV_8UC1, 2);
+        //CrystalEvaluatorCanny testCannyClass = new CrystalEvaluatorCanny(255, 127);
+        //CrystalEvaluatorThreshold testThresholdClass = new CrystalEvaluatorThreshold(127, 255);
+        //CrystalEvaluatorWatershed testWatershedClass = new CrystalEvaluatorWatershed(127, 255, new OpenCvSharp.Size(3, 3), MatType.CV_8UC1, 2);
 
         //ESEMENYKEZELOK
         private void ChooseSavePathClick(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 SaveFileDialog save = new SaveFileDialog();
@@ -119,6 +125,7 @@ namespace WpfKeretrendszer
             Mat buffer = new Mat();
             Mat result = new Mat();
             int sleepTime = (int)Math.Round(1000 / videoCapture.Fps);
+            //ICrystalEvaluatorBase algorithm = new CrystalEvaluatorDefault();
 
             if (savePath == null)
             {
@@ -134,6 +141,22 @@ namespace WpfKeretrendszer
                 allowToWriteVideo = false;
             }
 
+            //switch (button)
+            //{
+            //    case ClickedButton.normal:
+            //        result = buffer;
+            //        break;
+            //    case ClickedButton.canny:
+            //        algorithm = new CrystalEvaluatorCanny(127, 255);
+            //        break;
+            //    case ClickedButton.threshold:
+            //        algorithm = new CrystalEvaluatorThreshold(127, 255);
+            //        break;
+            //    case ClickedButton.watershed:
+            //        algorithm = new CrystalEvaluatorWatershed(127, 255);
+            //        break;
+            //}
+
             while (true)
             {
                 videoCapture.Read(buffer);
@@ -142,21 +165,9 @@ namespace WpfKeretrendszer
                     break;
 
                 }
-                switch (button)
-                {
-                    case ClickedButton.normal:
-                        result = buffer;
-                        break;
-                    case ClickedButton.canny:
-                        result = testCannyClass.ProcessNextFrame(buffer);
-                        break;
-                    case ClickedButton.threshold:
-                        result = testThresholdClass.ProcessNextFrame(buffer);
-                        break;
-                    case ClickedButton.watershed:
-                        result = testWatershedClass.ProcessNextFrame(buffer);
-                        break;
-                }
+
+                //result = algorithm.ProcessNextFrame(buffer);
+
                 if (allowToWriteVideo == true)
                 {
                     if(!isWriterCreated)

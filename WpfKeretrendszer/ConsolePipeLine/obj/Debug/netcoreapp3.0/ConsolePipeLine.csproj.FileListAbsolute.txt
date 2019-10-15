@@ -1,0 +1,3 @@
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\ConsolePipeLine\obj\Debug\netcoreapp3.0\ConsolePipeLine.csprojAssemblyReference.cache
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\ConsolePipeLine\obj\Debug\netcoreapp3.0\ConsolePipeLine.AssemblyInfoInputs.cache
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\ConsolePipeLine\obj\Debug\netcoreapp3.0\ConsolePipeLine.AssemblyInfo.cs
