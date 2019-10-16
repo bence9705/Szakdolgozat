@@ -16,11 +16,15 @@ namespace WpfKeretrendszer.PipeLine
         #region Attributes
         private List<ImageFilterBase> pipeline = new List<ImageFilterBase>();
 
-        private IImageFilter displayer;
+        private IDisplayableImageFilter displayer;
         #endregion
 
-        #region Properties       
-        public IImageFilter Displayer
+        #region Properties
+        /// <summary>
+        /// ImageFilter used to Display the current frame.
+        /// It is a DefaultImageFilter by default.
+        /// </summary>
+        public IDisplayableImageFilter Displayer
         {
             get { return displayer; }
             set { displayer = value; }
@@ -35,17 +39,7 @@ namespace WpfKeretrendszer.PipeLine
         public BasicPipeLine()
         {
             pipeline.Add(new DefaultFilter());
-            displayer = pipeline[0];
-        }
-
-        /// <summary>
-        /// Constructors with parameters.
-        /// </summary>
-        /// <param name="videoc"> Video to process.</param>
-        /// <param name="imfc"> MassFlowCalculator class.</param>
-        /// <param name="ipc"> ParticleCalculator class.</param>
-        public BasicPipeLine(VideoCapture videoc) : this()
-        {
+            displayer = (IDisplayableImageFilter)pipeline[0];
         }
         #endregion
 
@@ -57,7 +51,7 @@ namespace WpfKeretrendszer.PipeLine
 
         public Mat Display()
         {
-            return displayer.GetCurrentFrame();
+            return displayer.Display();
         }
 
         public double GetMassFlow(IImageFilter source)
@@ -93,6 +87,8 @@ namespace WpfKeretrendszer.PipeLine
             throw new NotImplementedException("Not Implemented yet!");
         }
 
-    } 
-    #endregion
+
+
+        #endregion
+    }
 }

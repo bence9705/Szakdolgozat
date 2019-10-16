@@ -72,6 +72,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ImageFilters\DefaultFilter.cs" />
+    <Compile Include="ImageFilters\IDisplayableImageFilter.cs" />
     <Compile Include="ImageFilters\IImageFilter.cs" />
     <Compile Include="ImageFilters\ImageFilterBase.cs" />
     <Compile Include="MassFlowCalculator\IMassFlowCalculator.cs" />

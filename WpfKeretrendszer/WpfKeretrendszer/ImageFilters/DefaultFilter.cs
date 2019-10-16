@@ -12,7 +12,7 @@ namespace WpfKeretrendszer.ImageFilters
     /// <summary>
     /// It does nothing with the proccessed frame.
     /// </summary>
-    public class DefaultFilter : ImageFilterBase
+    public class DefaultFilter : ImageFilterBase , IDisplayableImageFilter
     {
         #region Methods
         public override Mat GetCurrentFrame()
@@ -34,6 +34,16 @@ namespace WpfKeretrendszer.ImageFilters
         public override double GetMassFlow()
         {
             throw new ArgumentException("This filter has no MassFlowCalculator!");
+        }
+
+        public string DisplayType()
+        {
+            return "Video without filter";
+        }
+
+        public Mat Display()
+        {
+            return CurrentFrame;
         }
         #endregion
     }
