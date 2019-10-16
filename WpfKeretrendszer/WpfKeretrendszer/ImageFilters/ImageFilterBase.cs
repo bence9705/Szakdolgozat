@@ -28,9 +28,7 @@ namespace WpfKeretrendszer.ImageFilters
 
         #region Methods
         public abstract Mat GetCurrentFrame();
-        public abstract int GetParticleNumber();
         public abstract IImageFilter Process(IImageFilter source);
-        public abstract double GetMassFlow();
         #endregion
 
     }

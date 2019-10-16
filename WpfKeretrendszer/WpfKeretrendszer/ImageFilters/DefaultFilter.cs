@@ -20,20 +20,11 @@ namespace WpfKeretrendszer.ImageFilters
             return CurrentFrame;
         }
 
-        public override int GetParticleNumber()
-        {
-            throw new ArgumentException("This filter has no ParticleCalculator!");
-        }
-
         public override IImageFilter Process(IImageFilter source)
         {
             CurrentFrame = source.GetCurrentFrame();
 
             return this;
-        }
-        public override double GetMassFlow()
-        {
-            throw new ArgumentException("This filter has no MassFlowCalculator!");
         }
 
         public string DisplayType()

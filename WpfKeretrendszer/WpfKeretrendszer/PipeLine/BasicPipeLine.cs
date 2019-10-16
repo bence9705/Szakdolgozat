@@ -54,15 +54,15 @@ namespace WpfKeretrendszer.PipeLine
             return displayer.Display();
         }
 
-        public double GetMassFlow(IImageFilter source)
-        {
-            return source.GetMassFlow();
-        }
+        //public double GetMassFlow(IImageFilter source)
+        //{
+        //    return source.GetMassFlow();
+        //}
 
-        public int GetParticleCount(IImageFilter source)
-        {
-            return source.GetParticleNumber();
-        }
+        //public int GetParticleCount(IImageFilter source)
+        //{
+        //    return source.GetParticleNumber();
+        //}
 
         public void LoadPipeLine(string source)
         {

@@ -28,15 +28,6 @@ namespace WpfKeretrendszer.ImageFilters
         /// <returns></returns>
         IImageFilter Process(IImageFilter source);
 
-        /// <summary>
-        /// Calculates the amount of particles on the current frame image.
-        /// </summary>
-        int GetParticleNumber();
-
-        /// <summary>
-        /// Calculates the massflow from the currentFrame using the specified algorithm.
-        /// </summary>
-        double GetMassFlow();
         #endregion
 
     }

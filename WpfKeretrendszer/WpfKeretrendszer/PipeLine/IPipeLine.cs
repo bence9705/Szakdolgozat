@@ -22,19 +22,19 @@ namespace WpfKeretrendszer.PipeLine
         /// </summary>
         Mat Display();
 
-        /// <summary>
-        /// Calculates the mass flow from the source IIF.
-        /// </summary>
-        /// <param name="source"> ImageFilter object from which it takes the neccessary data. (i.e.: particle number)</param>
-        /// <returns></returns>
-        double GetMassFlow(IImageFilter source);
+        ///// <summary>
+        ///// Calculates the mass flow from the source IIF.
+        ///// </summary>
+        ///// <param name="source"> ImageFilter object from which it takes the neccessary data. (i.e.: particle number)</param>
+        ///// <returns></returns>
+        //double GetMassFlow(IImageFilter source);
 
-        /// <summary>
-        /// Calculates the mass flow from the source IIF.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        int GetParticleCount(IImageFilter source);
+        ///// <summary>
+        ///// Calculates the mass flow from the source IIF.
+        ///// </summary>
+        ///// <param name="source"></param>
+        ///// <returns></returns>
+        //int GetParticleCount(IImageFilter source);
 
         /// <summary>
         /// Adds the ImageFilter to the pipeline.
