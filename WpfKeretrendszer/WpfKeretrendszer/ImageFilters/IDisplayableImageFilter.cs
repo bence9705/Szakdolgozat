@@ -11,6 +11,6 @@ namespace WpfKeretrendszer.ImageFilters
     {
         string DisplayType();
 
-        Mat Display();
+         Mat Display();
     }
 }
