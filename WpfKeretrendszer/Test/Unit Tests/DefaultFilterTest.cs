@@ -10,14 +10,14 @@ namespace Test.Unit_Tests
     public class DefaultFilterTest
     {   
         [TestMethod]
-        public void GetCurrentFrameTest()
+        public void CurrentFrameTest()
         {
             DefaultFilter df = new DefaultFilter();
             Mat black = new Mat(new Size(300, 300), MatType.CV_8UC1, new Scalar(0, 0, 0));
 
             df.CurrentFrame = black;
 
-            Mat frame = df.GetCurrentFrame();
+            Mat frame = df.CurrentFrame;
 
             Assert.AreEqual(300, frame.Width);
             Assert.AreEqual(300, frame.Height);
@@ -35,7 +35,7 @@ namespace Test.Unit_Tests
 
             df2.CurrentFrame = black;
 
-            Mat frame = df2.GetCurrentFrame();
+            Mat frame = df2.CurrentFrame;
 
             Assert.AreEqual(300, frame.Width);
             Assert.AreEqual(300, frame.Height);

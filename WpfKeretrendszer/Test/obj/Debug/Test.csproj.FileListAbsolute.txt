@@ -27,3 +27,10 @@ C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvS
 C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.Blob.xml
 C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.Extensions.pdb
 C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.Extensions.xml
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\Newtonsoft.Json.dll
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\Newtonsoft.Json.xml
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.UserInterface.dll
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.UserInterface.pdb
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\OpenCvSharp.UserInterface.xml
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\Test.dll.config
+C:\Users\messg\source\repos\Szakdolgozat\WpfKeretrendszer\Test\bin\Debug\JsonSubTypes.dll

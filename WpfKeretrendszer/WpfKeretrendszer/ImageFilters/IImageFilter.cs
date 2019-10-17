@@ -14,15 +14,21 @@ namespace WpfKeretrendszer.ImageFilters
     /// </summary>
     public interface IImageFilter
     {
-        #region Methods
+        #region Properties
         /// <summary>
-        /// Returns CurrentFrame. Important in ThreadSafe environment
+        /// Property used to acces the current frame on which the ImageFilter was applied.
         /// </summary>
-        /// <returns></returns>
-        Mat GetCurrentFrame();
+        Mat CurrentFrame
+        {
+            get;
+            set;
+        } 
+        #endregion
+
+        #region Methods
 
         /// <summary>
-        /// Runs the Algorithm on Frame and returns the processed Frame.
+        /// Runs the Filter Algorithm and returns itself.
         /// </summary>
         /// <param name="source"> Runs the algorithm on this object.</param>
         /// <returns></returns>

@@ -22,6 +22,7 @@ namespace WpfKeretrendszer.PipeLine
         /// </summary>
         Mat Display();
 
+        #region Currently unnecessary
         ///// <summary>
         ///// Calculates the mass flow from the source IIF.
         ///// </summary>
@@ -35,27 +36,28 @@ namespace WpfKeretrendszer.PipeLine
         ///// <param name="source"></param>
         ///// <returns></returns>
         //int GetParticleCount(IImageFilter source);
+        #endregion
+
 
         /// <summary>
         /// Adds the ImageFilter to the pipeline.
         /// </summary>
-        /// <param name="filter"></param>
+        /// <param name="filter"></param> 
         void AddFilter(ImageFilterBase filter);
 
         /// <summary>
         /// Load saved PipeLine from a file.
         /// TODO: what kind of File? 
         /// </summary>
-        /// <param name="source"> Location on hard drive from which it loads..</param>
-        void LoadPipeLine(string source);
+        /// <param name="filename"> Name of the pipeline</param>
+        void LoadPipeLine(string filename);
 
         /// <summary>
-        /// Saves PipeLine to the location.
+        /// Saves PipeLine with name.
         /// </summary>
-        /// /// <param name="source"> Location on hard drive to save config file.</param>
-        void SavePipeLine(string location);
+        /// <param name="source"> Name of the saved pipeline.</param>
+        void SavePipeLine(string filename);
 
-       
         #endregion
 
     }

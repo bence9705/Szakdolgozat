@@ -6053,11 +6053,6 @@
             Returns Ptr&lt;T&gt;.get() pointer
             </summary>
         </member>
-        <member name="T:OpenCvSharp.SerializableAttribute">
-            <summary>
-            Dummy System.Serializable
-            </summary>
-        </member>
         <member name="T:OpenCvSharp.Aruco.CvAruco">
             <summary>
             aruco module

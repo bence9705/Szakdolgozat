@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using OpenCvSharp;
 using WpfKeretrendszer.MassFlowCalculator;
 using WpfKeretrendszer.ParticleCalculator;
@@ -15,14 +16,10 @@ namespace WpfKeretrendszer.ImageFilters
     public class DefaultFilter : ImageFilterBase , IDisplayableImageFilter
     {
         #region Methods
-        public override Mat GetCurrentFrame()
-        {
-            return CurrentFrame;
-        }
 
         public override IImageFilter Process(IImageFilter source)
         {
-            CurrentFrame = source.GetCurrentFrame();
+            CurrentFrame = source.CurrentFrame;
 
             return this;
         }

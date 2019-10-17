@@ -24,7 +24,7 @@ namespace Test.TestClasses
         /// <returns></returns>
         public override IImageFilter Process(IImageFilter source)
         {
-            CurrentFrame = source.GetCurrentFrame();
+            CurrentFrame = source.CurrentFrame;
             CurrentFrame.Rectangle(new Point(0, 0), new Point(20, 20),new Scalar(255, 255, 255) ,-1);
             frameCount++;
 

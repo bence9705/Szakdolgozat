@@ -8,6 +8,8 @@ using OpenCvSharp;
 using WpfKeretrendszer.ImageFilters;
 using WpfKeretrendszer.MassFlowCalculator;
 using WpfKeretrendszer.ParticleCalculator;
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace WpfKeretrendszer.PipeLine
 {
@@ -54,6 +56,7 @@ namespace WpfKeretrendszer.PipeLine
             return displayer.Display();
         }
 
+        #region Currently unnecessary
         //public double GetMassFlow(IImageFilter source)
         //{
         //    return source.GetMassFlow();
@@ -62,9 +65,10 @@ namespace WpfKeretrendszer.PipeLine
         //public int GetParticleCount(IImageFilter source)
         //{
         //    return source.GetParticleNumber();
-        //}
+        //} 
+        #endregion
 
-        public void LoadPipeLine(string source)
+        public void LoadPipeLine(string filename)
         {
             throw new NotImplementedException("Not Implemented yet!");
         }
@@ -82,11 +86,21 @@ namespace WpfKeretrendszer.PipeLine
 
         }
 
-        public void SavePipeLine(string location)
+        public void SavePipeLine(string filename)
         {
-            throw new NotImplementedException("Not Implemented yet!");
-        }
+            string file = @"./Profiles/" + filename +  ".json";
 
+            using (StreamWriter sw = File.CreateText(file))
+            {
+                string json = JsonConvert.SerializeObject(pipeline, Formatting.Indented);
+               
+                JsonSerializer js = new JsonSerializer();
+                js.Serialize(sw, pipeline);
+
+                Console.Write(json); 
+            }
+
+        }
 
 
         #endregion
